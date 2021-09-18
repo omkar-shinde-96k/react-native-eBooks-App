@@ -1,14 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, ImageBackground, Share, Linking } from 'react-native';
- 
+
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
- 
+
 
 export function DrawerContent(props) {
+    const progress = useDrawerProgress();
 
+    const translateX = Animated.interpolate(progress, {
+        inputRange: [0, 1],
+        outputRange: [-100, 0],
+    });
     return (
-        <View style={{ flex: 1, margin: 0, padding: 0 }}>
-            <DrawerContentScrollView {...props} > 
+        <Animated.View style={{ transform: [{ translateX }] }}>
+            <View style={{ flex: 1, margin: 0, padding: 0 }}>
+                <DrawerContentScrollView {...props} >
 
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem
@@ -19,13 +25,18 @@ export function DrawerContent(props) {
                             onPress={() => {
                                 props.navigation.navigate('Tabjoke1');
                             }}
-                        /> 
+                        />
+
+                     
+
                     </Drawer.Section>
 
-               
-            </DrawerContentScrollView>
- 
-        </View>
+
+                </DrawerContentScrollView>
+
+            </View>
+
+        </Animated.View>
     );
 }
 
