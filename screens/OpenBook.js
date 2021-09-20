@@ -2,24 +2,31 @@ import React from 'react';
 
 import {
     SafeAreaView,
-    ScrollView,
-    StatusBar,
+    ScrollView, 
     StyleSheet,
     Text,
     useColorScheme,
     View,
-    Image,
+    Image, 
     Button,
     Linking,
     Share
-} from 'react-native';
+} from 'react-native'; 
 
-export const OpenBook = ({ navigation }) => {
+// import Pdf from 'react-native-pdf';
+  
+export const OpenBook = ({route,navigation }) => {
+    const { itemId, otherParam } = route.params;
+    const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>full book show here</Text>
-    
+        <View>
+        <Text>full book show here , {itemId}</Text> 
       <Button title="Go back" onPress={() => navigation.goBack()} />
+{/* 
+        <Pdf
+                    source={source} /> */}
+                    
+
     </View>
     )
 }

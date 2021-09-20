@@ -60,7 +60,7 @@ export function DrawerContent(props) {
                 icon={({ color, size }) => (
                     <Icon name="bookmark-outline" color={color} size={size} />
                 )}
-                label=" Support us"
+                label="Support us"
                 onPress={() => {
                     props.navigation.navigate('OpenBook');
                 }}
@@ -69,7 +69,7 @@ export function DrawerContent(props) {
 
             <DrawerItem
                 icon={({ color, size }) => (
-                    <Icon name="sharealt" color={color} size={size} />
+                    <Icon name="bookmark-outline" color={color} size={size} />
                 )}
                 label="Share App"
                 onPress={async () => {
