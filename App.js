@@ -10,10 +10,11 @@ import {
   useColorScheme,
   View,
   Image,
-  Button
+  Button,
+  Linking,
+  Share
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator, DrawerContentScrollView,
@@ -22,22 +23,24 @@ import {
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { DrawerContent } from './DrawerContent';
 
 
-const Temp = ({ navigation }) => {
-  return (
-    <View>
-      <Text>temp tab page </Text>
+import Books from './screens/Books';
+import {BooksRowContaint} from './screens/Books';
+import {OpenBook} from './screens/OpenBook';
 
-    </View>
-  )
-}
+
 const Temp2 = () => {
   return (
     <Text>temp2 tab page</Text>
   )
 }
 
+ 
+ 
 const Tab = createMaterialTopTabNavigator();
 const MyTabs = () => {
   return (
@@ -51,83 +54,28 @@ const MyTabs = () => {
         },
         // tabBarItemStyle: { width: 100 },
         tabBarStyle: {
-          "backgroundColor": "powderblue"
+          "backgroundColor": "white"
         },
       }}>
-      <Tab.Screen name="Books" component={Temp} />
+      <Tab.Screen name="Books" component={Books} />
       <Tab.Screen name="Stories" component={Temp2} />
       <Tab.Screen name="jokes" component={Temp2} />
     </Tab.Navigator>
 
   );
 }
-
-const HeaderStack1 = ({ navigation }) => {
-  return (
-    <View>
-      <Text>Drawer 2</Text>
-      <Button
-        title="Go somewhere"
-        onPress={() => {
-          navigation.navigate('HeaderStack');
-        }}
-      />
-    </View>
-  )
-}
-const HeaderStack2 = () => {
-  return (
-    <Text>Drawer 3</Text>
-  )
-}
-
-
-function CustomDrawerContent(props) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-
-      <DrawerItem
-        label="Help"
-        onPress={() => Linking.openURL('https://mywebsite.com/help')}
-        screenOptions={{
-          activeTintColor: "pink",
-          tabBarLabelStyle: {
-            "fontSize": 12
-          }
-        }}
-      />
-
-      <DrawerItem
-        label="HOME"
-        onPress={() => {
-          props.navigation.navigate('Notifications');
-        }}
-
-      />
-
-      <Button
-        title="Go somewhere"
-        onPress={() => {
-          props.navigation.navigate('Notifications');
-        }}
-      />
-
-
-    </DrawerContentScrollView>
-  );
-}
-
+ 
+ 
 function LogoTitle() {
   return (
-    <View style={{flex:1,flexDirection: "row", textAlign: "center",justifyContent:'center',alignItems:'center'}}>
-     
+    <View style={{ flex: 1, flexDirection: "row", textAlign: "center", justifyContent: 'center', alignItems: 'center' }}>
+
       <Image
-        style={{ width: 40, height: 40,margin:0,padding:0}}
+        style={{ width: 40, height: 40, margin: 0, padding: 0 }}
         source={require('./logo.png')}
-      /> 
-          <Text style={{color: 'orange',marginLeft:10, fontSize: 17, justifyContent:'flex-start'}}>Books Lab</Text>
-   
+      />
+      <Text style={{ color: 'orange', marginLeft: 10, fontSize: 17, justifyContent: 'flex-start' }}>E-Library</Text>
+
     </View >
   );
 }
@@ -135,49 +83,57 @@ function LogoTitle() {
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
   return (
-    <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />} screenOptions={{
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}  BooksRowContaint={(props) => <BooksRowContaint {...props} />} screenOptions={{
       drawerStyle: {
         backgroundColor: 'white',
-        width: 240,
-      },
-      drawerType: 'slide', 
+        width: 280,
+      }, 
+      drawerType: 'slide',
     }}>
 
       <Drawer.Screen
-        name="Books Lab"
+        name="Home"
         component={MyTabs}
         options={{
+
           headerStyle: {
-            backgroundColor: 'powderblue',
+            backgroundColor: 'white',
           },
-          drawerLabel: 'Home',
-          headerTintColor: 'orange',
-          drawerInactiveTintColor:'red',
+
+          drawerInactiveTintColor: 'orange',
           headerTitleStyle: {
             fontWeight: 'bold',
-            fontSize: 20, 
+            fontSize: 20,
           },
           drawerStyle: {
-            width: 220, 
+            width: 270,
           },
-          headerTitle: props => <LogoTitle {...props}  />
+
+          headerTitle: props => <LogoTitle {...props} />
         }}
       />
+
       <Drawer.Screen
-        name="Notifications"
-        component={HeaderStack1}
-        options={{ drawerLabel: 'HeaderStack1' }}
+        name="OpenBook"
+        component={OpenBook}
+        options={{
+          headerStyle: {
+            backgroundColor: 'white',
+          },
+          drawerInactiveTintColor: 'orange',
+          drawerStyle: {
+            width: 220,
+          },
+          headerTitle: props => <LogoTitle {...props} />
+        }}
       />
-      <Drawer.Screen
-        name="SubFeeda"
-        component={HeaderStack2}
-        options={{ drawerLabel: 'SubFeed' }}
-      />
+
     </Drawer.Navigator>
   );
 }
 
 const App = () => {
+
   // const isDarkMode = useColorScheme() === 'dark';
 
   // const backgroundStyle = {
@@ -186,7 +142,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <MyDrawer/>
+      <MyDrawer />
     </NavigationContainer>
   );
 };

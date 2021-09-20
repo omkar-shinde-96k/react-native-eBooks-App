@@ -1,87 +1,125 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground, Share, Linking } from 'react-native';
+import {
+    createDrawerNavigator, DrawerContentScrollView,
+    DrawerItemList, DrawerItem
+} from '@react-navigation/drawer';
 
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { View, StyleSheet, ImageBackground, Share, Linking, Button,Text } from 'react-native';
 
+import {
+    useTheme,
+    Avatar,
+    Title,
+    Caption,
+    Paragraph,
+    Drawer,
+    TouchableRipple,
+    Switch,
+} from 'react-native-paper';
+
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function DrawerContent(props) {
-    const progress = useDrawerProgress();
 
-    const translateX = Animated.interpolate(progress, {
-        inputRange: [0, 1],
-        outputRange: [-100, 0],
-    });
+    
     return (
-        <Animated.View style={{ transform: [{ translateX }] }}>
-            <View style={{ flex: 1, margin: 0, padding: 0 }}>
-                <DrawerContentScrollView {...props} >
+        <DrawerContentScrollView {...props}>
+            {/* <DrawerItemList {...props} /> */}
 
-                    <Drawer.Section style={styles.drawerSection}>
-                        <DrawerItem
-                            icon={({ color, size }) => (
-                                <Icon name="home" color={color} size={size} />
-                            )}
-                            label="HOME"
-                            onPress={() => {
-                                props.navigation.navigate('Tabjoke1');
-                            }}
-                        />
+            <ImageBackground
 
-                     
+                source={require('./logo.png')}
 
-                    </Drawer.Section>
+                style={{ width: '100%', height: 100 }}>
+                <Text style={{color:"black",fontWeight:"bold",justifyContent:"center", alignItems:"center"}}>FREE HINDI BOOKS </Text>
+            </ImageBackground>
+
+            <DrawerItem
+                icon={({ color, size }) => (
+                    <Icon name="home" color={color} size={size} />
+                )}
+                label="HOME"
+                onPress={() => {
+                    props.navigation.navigate('Books');
+                }}
+            />
+
+            <DrawerItem
+                icon={({ color, size }) => (
+                    <Icon name="sticker-emoji" color={color} size={size} />
+                )}
+                label="Wallpaper"
+                onPress={() => {
+                    props.navigation.navigate('OpenBook');
+                }}
+            />
 
 
-                </DrawerContentScrollView>
+            <DrawerItem
+                icon={({ color, size }) => (
+                    <Icon name="bookmark-outline" color={color} size={size} />
+                )}
+                label=" Support us"
+                onPress={() => {
+                    props.navigation.navigate('OpenBook');
+                }}
+            />
 
-            </View>
 
-        </Animated.View>
+            <DrawerItem
+                icon={({ color, size }) => (
+                    <Icon name="sharealt" color={color} size={size} />
+                )}
+                label="Share App"
+                onPress={async () => {
+                    try {
+                        const result = await Share.share({
+                            message: "http://bit.do/download-app-now",
+                        });
+                        if (result.action === Share.sharedAction) {
+                            if (result.activityType) {
+                                // console.log('shared type')   
+                            } else {
+                                console.log('shared')  // shared
+                            }
+                        } else if (result.action === Share.dismissedAction) {
+                            console.log('dismissed')  // dismissed
+                        }
+                    } catch (error) {
+                        alert(error.message);
+                    }
+                }}
+            />
+
+
+
+            <DrawerItem icon={({ color, size }) => (
+                <Icon name="gmail" color={color} size={size} />
+            )}
+                label="gmail"
+                onPress={() => {
+                    Linking.openURL('http://instagram.com/omkar_shinde.96k')
+                }}
+            />
+
+            <DrawerItem icon={({ color, size }) => (
+                <Icon name="instagram" color={color} size={size} />
+            )}
+                label="instagram"
+                onPress={() => {
+                    Linking.openURL('http://instagram.com/omkar_shinde.96k')
+                }}
+            />
+
+
+
+
+
+
+
+
+
+        </DrawerContentScrollView>
     );
 }
-
-const styles = StyleSheet.create({
-    drawerContent: {
-        flex: 1,
-    },
-    userInfoSection: {
-        paddingLeft: 20,
-    },
-    title: {
-        fontSize: 16,
-        marginTop: 3,
-        fontWeight: 'bold',
-    },
-    caption: {
-        fontSize: 14,
-        lineHeight: 14,
-    },
-    row: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    section: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginRight: 15,
-    },
-    paragraph: {
-        fontWeight: 'bold',
-        marginRight: 3,
-    },
-    drawerSection: {
-        marginTop: 15,
-    },
-    bottomDrawerSection: {
-        marginBottom: 15,
-        borderTopColor: '#f4f4f4',
-        borderTopWidth: 1,
-    },
-    preference: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 12,
-        paddingHorizontal: 16,
-    },
-});
