@@ -16,40 +16,44 @@ import {
     Share
 } from 'react-native';
 
+const tempbook = require('../Books/tempbook');
+const thinkandgrowrich = require('../Books/thinkandgrowrich');
+
 const Category = [
-    { _id: 1, category: "marathii" },
-    { _id: 2, category: "Hindi" },
-    { _id: 3, category: "english" },
-    { _id: 4, category: "telgu" },
-    { _id: 5, category: "Tamil" }
-];
-const BookApi = [
-    { _id: 1, category: "marathi", name: "book marathi", img: '../images/thinkandgrowrich.jpg', url: "this is url" },
-    { _id: 2, category: "Hindi", name: "book marathi", img: '../images/logo.png', url: "this is url" },
-    { _id: 3, category: "marathi", name: "book marathi", img: '../images/thinkandgrowrich.jpg', url: "this is url" },
-    { _id: 4, category: "Hindi", name: "book marathi", img: '../images/logo.png', url: "this is url" },
-    { _id: 5, category: "Hindi", name: "book marathi", img: '../images/logo.png', url: "this is url" },
-    { _id: 6, category: "Hindi", name: "book marathi", img: '../images/logo.png', url: "this is url" },
+    { _id: 1, category: "English" },
+    { _id: 2, category: "Trending" },
+    { _id: 3, category: "Business"},
+    { _id: 4, category: "Biographies"},
+    { _id: 5, category: "Student" },
+    { _id: 6, category: "Science" }
 ];
 
-export const BooksRowContaint = ({ navigation }) => {
+const BookApi = [
+    { _id: 1, category: "English", name: "Think And Grow Rich", img: '../images/thinkandgrowrich.jpg', book:thinkandgrowrich},
+ 
+];
+
+export const BooksRowContaint = ({ navigation, cat }) => {
+
     return (
         BookApi.map((bookele) => {
-            // let ima = element.img;
-            // let imaged = {require(`${ima}`)};
-            // const image = { uri: "https://reactjs.org/logo-og.png" }
-            return (
-                <View key={bookele._id}>
-                    <TouchableOpacity onPress={() => {
-                        navigation.navigate('OpenBook', {
-                            itemId: 86,
-                            otherParam: 'anything you want here',
-                        });
-                    }}>
-                        <Image source={require("../images/thinkandgrowrich.jpg")} style={styles.book} />
-                    </TouchableOpacity >
-                </View>
-            );
+            if (bookele.category == cat) {
+
+                return (
+                    <View key={bookele._id}>
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate('OpenBook', {
+                                itemId: bookele._id,
+                                book: bookele.book
+                            });
+                        }}>
+                            <Image source={require('../images/thinkandgrowrich.jpg')} style={styles.book} />
+                        </TouchableOpacity >
+                    </View>
+                );
+            }
+
+
         })
     );
 }
@@ -60,10 +64,10 @@ const SubBook = ({ navigation }) => {
             return (
 
                 <View key={element._id}>
-                    <View style={styles.more}><Text>  {element.category}</Text><Text>See All  </Text></View>
+                    <View style={styles.more}><Text style={{ color: "orange" }}>  {element.category}</Text><Text style={{ color: "orange" }}>See All  </Text></View>
 
                     <ScrollView horizontal={true} style={styles.main}>
-                        <BooksRowContaint navigation={navigation} /> 
+                        <BooksRowContaint cat={element.category} navigation={navigation} />
                     </ScrollView>
                 </View>
 

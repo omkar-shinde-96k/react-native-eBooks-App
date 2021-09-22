@@ -31,6 +31,7 @@ import { DrawerContent } from './DrawerContent';
 import Books from './screens/Books';
 import {BooksRowContaint} from './screens/Books';
 import {OpenBook} from './screens/OpenBook';
+import Story from './Stories/Stories'
 
 
 const Temp2 = () => {
@@ -58,7 +59,7 @@ const MyTabs = () => {
         },
       }}>
       <Tab.Screen name="Books" component={Books} />
-      <Tab.Screen name="Stories" component={Temp2} />
+      <Tab.Screen name="Stories" component={Story} />
       <Tab.Screen name="jokes" component={Temp2} />
     </Tab.Navigator>
 

@@ -2,31 +2,42 @@ import React from 'react';
 
 import {
     SafeAreaView,
-    ScrollView, 
+    ScrollView,
     StyleSheet,
     Text,
     useColorScheme,
     View,
-    Image, 
+    Image,
     Button,
     Linking,
     Share
-} from 'react-native'; 
+} from 'react-native';
 
-// import Pdf from 'react-native-pdf';
-  
-export const OpenBook = ({route,navigation }) => {
-    const { itemId, otherParam } = route.params;
-    const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
+
+export const OpenBook = ({ route, navigation }) => {
+
+    let {book} = route.params;
+
+    // const BookApi = require(`../Books/book/${img}`);
+ 
     return (
         <View>
-        <Text>full book show here , {itemId}</Text> 
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-{/* 
-        <Pdf
-                    source={source} /> */}
-                    
-
-    </View>
+            <ScrollView>
+                <Text style={{ textAlign: "center", fontSize: 14, fontWeight: "bold" }}>  </Text>
+                <Text>
+                {book.book}
+                </Text>
+            </ScrollView>
+            <Button title="Go back" onPress={() => navigation.goBack()} />
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: 25,
+    }
+});
